@@ -46,6 +46,7 @@ const CreateArticle: FC = () => {
   });
 
   const addTag = () => {
+    unregister('tags0');
     if (inputState) {
       setTag([...tag, { v: inputState, id: maxId++ }]);
       setInputState('');
