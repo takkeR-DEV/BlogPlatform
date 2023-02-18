@@ -28,7 +28,7 @@ const CreateArticle: FC = () => {
     const { body, description, title, ...tags } = data;
     // dispatch(authRegister(data));
     const allTags = Object.entries(tags).map((el) => el[1]);
-    const tagList = allTags.filter((el) => !!el);
+    const tagList = allTags.filter((el: any) => el.trim() !== '');
     const newData = { body, description, title, tagList };
 
     console.log(newData);
