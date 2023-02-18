@@ -22,7 +22,9 @@ const CreateArticle: FC = () => {
   const dispatch = useAppDispatch();
 
   const test = (data: any) => {
+    // setInputState('');
     console.log(data);
+    console.log('fffffffffff', inputState);
     const { body, description, title, ...tags } = data;
     // dispatch(authRegister(data));
     const allTags = Object.entries(tags).map((el) => el[1]);
@@ -156,17 +158,25 @@ const CreateArticle: FC = () => {
             ))}
           </>
           <Input
-            value={inputState}
             focusBorderColor={errors?.email ? 'red.400' : 'black'}
             w={'300px'}
             h={'40px'}
+            value={inputState}
             placeholder="Title"
             {...register('tags0', {
-              onChange: (e) => setInputState(e.target.value),
+              onChange: (e) => {
+                setInputState(e.target.value);
+              },
               // setValueAs: (v) => setInputState(v),
             })}
           />
-          <Button m="5" onClick={() => setInputState('')}>
+          <Button
+            m="5"
+            onClick={() => {
+              setInputState('');
+              unregister('tags0');
+            }}
+          >
             DELETE
           </Button>
           <Button onClick={() => addTag()}>ADD</Button>

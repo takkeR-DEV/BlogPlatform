@@ -40,12 +40,12 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<PostPage />} />
-          <Route path="articles/" element={<PostPage />} />
-          <Route path="articles/:slug" element={<SinglePost />} />
-          <Route path="sign-up/" element={<Register />} />
-          <Route path="sign-in/" element={<Login />} />
-          <Route path="profile/" element={<EditProfile />} />
-          <Route path="new-article/" element={<CreateArticle />} />
+          <Route path="/articles/" element={<PostPage />} />
+          <Route path="/articles/:slug" element={<SinglePost />} />
+          <Route path="/sign-up/" element={<Register />} />
+          <Route path="/sign-in/" element={<Login />} />
+          <Route path="/profile/" element={<EditProfile />} />
+          <Route path="/new-article/" element={<CreateArticle />} />
         </Route>
       </Routes>
     </ChakraProvider>
