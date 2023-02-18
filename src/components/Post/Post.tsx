@@ -2,9 +2,10 @@ import { Box, Button, Link, Text, Image, IconButton, Tag } from '@chakra-ui/reac
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 import React, { FC, useState } from 'react';
 import pc from './Post.module.scss';
-import { useParams, Link as ReachLink } from 'react-router-dom';
+import { useParams, Link as ReachLink, useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../../hooks/redux';
 import ModalDelete from '../ModalDelete/ModalDelete';
+import { delFavorite, postFavorite } from '../../service/api/apiFavorites';
 
 const count = () => {
   let id = 0;
@@ -15,17 +16,21 @@ const count = () => {
 const id = count();
 
 const Post: FC<any> = ({ data, checkSlug, showmore }) => {
+  console.log('test', data);
+
+  const navigate = useNavigate();
   const { user, logined } = useAppSelector((state) => state.authReducer);
   console.log('gggggggggggg', data);
 
-  const [active, setActive] = useState(false);
+  const [active, setActive] = useState(data.favorited);
   const [count, setCount] = useState(data.favoritesCount);
   const { slug } = useParams();
   console.log('>>>>>>>>>>>>>>>>>', slug);
 
   const btn = () => {
-    setActive(() => !active);
+    setActive((active: string) => !active);
     setCount(() => (active ? count - 1 : count + 1));
+    !active ? postFavorite(data.slug, user.token) : delFavorite(data.slug, user.token);
   };
   return (
     <Box bg="white" maxW="942px" h="127px" maxH="140px" p="19px" w="941px">
@@ -43,8 +48,9 @@ const Post: FC<any> = ({ data, checkSlug, showmore }) => {
             >
               {data.title}
             </Link>
-            {active ? (
+            {active && logined ? (
               <IconButton
+                isDisabled={!logined}
                 colorScheme="red"
                 aria-label="Like"
                 size="16px"
@@ -54,6 +60,7 @@ const Post: FC<any> = ({ data, checkSlug, showmore }) => {
               />
             ) : (
               <IconButton
+                isDisabled={!logined}
                 aria-label="Like"
                 size="16px"
                 variant="ghost"
@@ -97,7 +104,13 @@ const Post: FC<any> = ({ data, checkSlug, showmore }) => {
           {data.author.username === user.username && logined && showmore ? (
             <>
               <ModalDelete slug={data.slug} token={user.token} />
-              <Button colorScheme="green" variant="outline" w="65px" h="31px">
+              <Button
+                colorScheme="green"
+                variant="outline"
+                w="65px"
+                h="31px"
+                onClick={() => navigate(`/articles/${data.slug}/edit`)}
+              >
                 Edit
               </Button>
             </>

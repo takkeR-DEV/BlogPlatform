@@ -6,6 +6,8 @@ import { articlesSlice } from '../reducers/articesReducer';
 //get Aricles
 export const fetchArticles = (page: number) => async (dispatch: AppDispatch) => {
   try {
+    const token = localStorage.getItem('token');
+    axios.defaults.headers.common['Authorization'] = `Token ${token}`;
     dispatch(articlesSlice.actions.articlesFetch());
     const res = await axios.get<any>(`https://blog.kata.academy/api/articles?&limit=5&offset=${(page - 1) * 5}`);
 

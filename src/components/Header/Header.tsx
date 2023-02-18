@@ -18,7 +18,7 @@ const Header: FC<HeaderProps> = () => {
   const accountLogOut = () => {
     dispatch(LogOut());
     toast({
-      position: 'top-right',
+      position: 'bottom-right',
       colorScheme: 'green',
       status: 'info',
       title: 'Successfully',
@@ -64,11 +64,13 @@ const Header: FC<HeaderProps> = () => {
             >
               Create Article
             </Button>
-            <Text fontSize={'18px'} lineHeight="28px">
-              {user.username}
-            </Text>
             <Link as={RouteLink} fontSize="18px" fontWeight="500" to="/profile">
-              <Image borderRadius="full" boxSize="46px" src={user.image ? user.image : defaultImage} alt="аватар" />
+              <Box display={'flex'} gap="10px" alignItems={'center'}>
+                <Text fontSize={'18px'} lineHeight="28px">
+                  {user.username}
+                </Text>
+                <Image borderRadius="full" boxSize="46px" src={user.image ? user.image : defaultImage} alt="аватар" />
+              </Box>
             </Link>
             <Button w="109px" h="51px" variant="outline" colorScheme={'black'} ml="15px" onClick={accountLogOut}>
               Log Out

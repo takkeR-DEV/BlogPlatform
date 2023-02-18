@@ -14,7 +14,7 @@ const Register: FC<any> = () => {
     if (logined) {
       navigate('/articles');
       toast({
-        position: 'top-right',
+        position: 'bottom-right',
         colorScheme: 'green',
         status: 'success',
         title: 'Successfully',

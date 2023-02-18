@@ -46,6 +46,7 @@ function App() {
           <Route path="/sign-in/" element={<Login />} />
           <Route path="/profile/" element={<EditProfile />} />
           <Route path="/new-article/" element={<CreateArticle />} />
+          <Route path="/articles/:slug/edit" element={<CreateArticle />} />
         </Route>
       </Routes>
     </ChakraProvider>

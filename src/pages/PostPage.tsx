@@ -1,6 +1,7 @@
 import { Box, Spinner, Stack } from '@chakra-ui/react';
-import React, { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Paginate } from 'react-paginate-chakra-ui';
+import { useParams } from 'react-router-dom';
 import PostList from '../components/PostList/PostList';
 import { useAppDispatch, useAppSelector } from '../hooks/redux';
 import { fetchArticles } from '../store/action-creator/articles';
@@ -11,13 +12,18 @@ import { fetchArticles } from '../store/action-creator/articles';
 // }
 
 const PostPage: FC = () => {
+  const { slug } = useParams();
   const dispatch = useAppDispatch();
-  const [page, setPage] = React.useState(0);
+  const [page, setPage] = useState(0);
   const handlePageClick = (p: number) => {
     console.log(p);
     setPage(p);
     dispatch(fetchArticles(p + 1));
   };
+
+  useEffect(() => {
+    dispatch(fetchArticles(1));
+  }, [slug]);
   const { articlesData, allPage, loading, error } = useAppSelector((state) => state.articlesReducer);
   return (
     <>

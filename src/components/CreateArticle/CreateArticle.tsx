@@ -1,8 +1,9 @@
-import { Box, Button, Heading, Input, Text, Textarea } from '@chakra-ui/react';
+import { Box, Button, Heading, Input, Text, Textarea, useToast } from '@chakra-ui/react';
 import { FC, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { newArticlePost } from '../../service/api/apiArticles';
 import newArticle from './CreateArticle.module.scss';
 
 let maxId = 1;
@@ -10,8 +11,13 @@ let maxId = 1;
 const CreateArticle: FC = () => {
   const { logined, user } = useAppSelector((state) => state.authReducer);
 
+  const { slug } = useParams();
+
+  console.log('я получил slug', slug);
+
   const [tag, setTag] = useState<any[]>([]);
   const [inputState, setInputState] = useState<any>('');
+  const toast = useToast();
 
   console.log(inputState);
 
@@ -32,6 +38,16 @@ const CreateArticle: FC = () => {
     const newData = { body, description, title, tagList };
 
     console.log(newData);
+    newArticlePost(newData).then((data) => {
+      navigate(`/articles/${data.slug}`);
+      toast({
+        position: 'bottom-right',
+        colorScheme: 'green',
+        status: 'success',
+        title: 'Successfully',
+        description: 'You have successfully created a post',
+      });
+    });
   };
 
   const {
@@ -72,7 +88,7 @@ const CreateArticle: FC = () => {
       gap="21px"
     >
       <Heading fontSize={'20px'} lineHeight={'28px'} mt={'48px'}>
-        Create new article
+        {slug ? 'Edit article' : 'Create new article'}
       </Heading>
       <form className={newArticle.formarticle} onSubmit={handleSubmit(test)}>
         <label>
@@ -124,10 +140,6 @@ const CreateArticle: FC = () => {
                 value: 6,
                 message: 'min 6',
               },
-              maxLength: {
-                value: 40,
-                message: 'max 20',
-              },
             })}
           />
           <Text fontSize={'14px'} color="red">
@@ -138,9 +150,10 @@ const CreateArticle: FC = () => {
           <Text fontSize={'14px'}>tags</Text>
           <>
             {tag.map((el) => (
-              <div key={el.id}>
+              <Box key={el.id} display={'flex'}>
                 <Input
                   focusBorderColor={errors?.email ? 'red.400' : 'black'}
+                  mb="10px"
                   w={'300px'}
                   h={'40px'}
                   placeholder="Title"
@@ -149,41 +162,47 @@ const CreateArticle: FC = () => {
                     required: 'This field should not be empty',
                   })}
                 />
-                <Button m="5" onClick={() => delTag(el.id)}>
+                <Button m="0 10px" variant={'outline'} colorScheme="red" onClick={() => delTag(el.id)}>
                   DELETE
                 </Button>
                 <Text fontSize={'14px'} color="red">
                   {errors?.tags && <>{errors?.tags?.message || 'Error'}</>}{' '}
                 </Text>
-              </div>
+              </Box>
             ))}
           </>
-          <Input
-            focusBorderColor={errors?.email ? 'red.400' : 'black'}
-            w={'300px'}
-            h={'40px'}
-            value={inputState}
-            placeholder="Title"
-            {...register('tags0', {
-              onChange: (e) => {
-                setInputState(e.target.value);
-              },
-              // setValueAs: (v) => setInputState(v),
-            })}
-          />
-          <Button
-            m="5"
-            onClick={() => {
-              setInputState('');
-              unregister('tags0');
-            }}
-          >
-            DELETE
-          </Button>
-          <Button onClick={() => addTag()}>ADD</Button>
-          <Text fontSize={'14px'} color="red">
-            {errors?.description && <>{errors?.description?.message || 'Error'}</>}{' '}
-          </Text>
+          <Box display={'flex'}>
+            <Input
+              focusBorderColor={errors?.email ? 'red.400' : 'black'}
+              w={'300px'}
+              h={'40px'}
+              value={inputState}
+              placeholder="Title"
+              {...register('tags0', {
+                onChange: (e) => {
+                  setInputState(e.target.value);
+                },
+                // setValueAs: (v) => setInputState(v),
+              })}
+            />
+            <Button
+              m={'0 10px'}
+              variant={'outline'}
+              colorScheme="red"
+              onClick={() => {
+                setInputState('');
+                unregister('tags0');
+              }}
+            >
+              DELETE
+            </Button>
+            <Button variant={'outline'} colorScheme="blue" onClick={() => addTag()}>
+              ADD
+            </Button>
+            <Text fontSize={'14px'} color="red">
+              {errors?.description && <>{errors?.description?.message || 'Error'}</>}{' '}
+            </Text>
+          </Box>
         </label>
         <Button colorScheme="blue" mt="12px" type="submit" w="319px" h="40px" mb="8px">
           Send
