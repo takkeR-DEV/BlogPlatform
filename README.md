@@ -1,1 +1,1 @@
-https://avia-sales-ts.vercel.app/
+https://blog-platform-inky.vercel.app/
