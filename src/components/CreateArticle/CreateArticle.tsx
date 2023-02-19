@@ -125,9 +125,8 @@ const CreateArticle: FC = () => {
   return (
     <Box
       w={938}
-      minH={701}
       bg={'white'}
-      m={'0 auto'}
+      m={'0 auto 20px auto'}
       display="flex"
       flexDirection={'column'}
       alignItems="center"
@@ -258,7 +257,7 @@ const CreateArticle: FC = () => {
           </UnorderedList>
           {errorTags ? <Text color="red">This field should not be empty</Text> : null}
         </label>
-        <Button colorScheme="blue" mt="12px" type="submit" w="319px" h="40px" mb="8px">
+        <Button colorScheme="blue" mt="12px" type="submit" w="319px" h="40px" mb="48px">
           Send
         </Button>
       </form>
