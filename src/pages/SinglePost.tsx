@@ -7,19 +7,23 @@ import { getPostSlug } from '../service/api/apiPostSlug';
 import ReactMarkdown from 'react-markdown';
 import ChakraUIRenderer from 'chakra-ui-markdown-renderer';
 import { IArticles } from '../types/articles';
+import { useAppSelector } from '../hooks/redux';
 
 const SinglePost = () => {
+  const { user } = useAppSelector((state) => state.authReducer);
   const { slug } = useParams();
   const [data, setData] = useState<IArticles | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    setLoading(true);
-    getPostSlug(slug).then((el) => {
-      setLoading(false);
-      setData(el.data.article);
-    });
-  }, [slug]);
+    if (user.token) {
+      setLoading(true);
+      getPostSlug(slug, user.token).then((el) => {
+        setLoading(false);
+        setData(el);
+      });
+    }
+  }, [slug, user.token]);
   console.log(data);
 
   return (
@@ -34,10 +38,12 @@ const SinglePost = () => {
               bg="white"
               boxSizing="content-box"
               m="0 auto 30px auto"
-              p="20px"
+              boxShadow="lg"
             >
               <Post data={data} checkSlug={slug} showmore={true} />
-              <ReactMarkdown components={ChakraUIRenderer()} children={data.body} skipHtml />
+              <Box p="0 20px 20px 20px">
+                <ReactMarkdown components={ChakraUIRenderer()} children={data.body} skipHtml />
+              </Box>
             </Box>
           ) : null}
         </>

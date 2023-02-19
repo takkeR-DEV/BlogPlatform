@@ -5,29 +5,29 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { editArticlePost, newArticlePost } from '../../service/api/apiArticles';
 import { getPostSlug } from '../../service/api/apiPostSlug';
+import { IArticles } from '../../types/articles';
 import newArticle from './CreateArticle.module.scss';
 
 let maxId = 1;
 
 const CreateArticle: FC = () => {
-  const { logined } = useAppSelector((state) => state.authReducer);
+  const { logined, user } = useAppSelector((state) => state.authReducer);
+
+  type TagsType = { v: string; id: string };
 
   const { slug } = useParams();
   const [dataTitle, setDataTitle] = useState<string>('');
   const [dataDesc, setDataDesc] = useState<string>('');
   const [dataBody, setDataBody] = useState<string>('');
-  const [loading, setLoading] = useState<any>(false);
-  const [tag, setTag] = useState<any[]>([]);
-  const [inputState, setInputState] = useState<any>('');
+  const [tag, setTag] = useState<TagsType[]>([]);
+  const [inputState, setInputState] = useState<string>('');
   const [errorTags, setErrorTags] = useState(false);
   const toast = useToast();
 
   useEffect(() => {
     clearState();
     if (slug) {
-      setLoading(true);
-      getPostSlug(slug).then((el) => {
-        setLoading(false);
+      getPostSlug(slug, user.token).then((el) => {
         setDataState(el);
       });
     }
@@ -38,13 +38,13 @@ const CreateArticle: FC = () => {
     setTag([]);
   };
 
-  const setDataState = (el: any) => {
-    setValue('title', el.data.article.title);
-    setValue('description', el.data.article.description);
-    setValue('body', el.data.article.body);
+  const setDataState = (el: IArticles) => {
+    setValue('title', el.title);
+    setValue('description', el.description);
+    setValue('body', el.body);
     setTag(
-      el.data.article.tagList.map((elem: any) => {
-        return { v: elem, id: maxId++ };
+      el.tagList.map((elem: string) => {
+        return { v: elem, id: String(maxId++) };
       })
     );
   };
@@ -55,11 +55,17 @@ const CreateArticle: FC = () => {
   }, [logined]);
   const dispatch = useAppDispatch();
 
-  const test = (data: any) => {
+  interface FormDataType {
+    body?: string;
+    description?: string;
+    title?: string;
+  }
+
+  const test = (data: FormDataType) => {
     const { body, description, title, ...tags } = data;
 
     const allTags: any[] = Object.entries(tags).map((el) => el[1]);
-    const tagList = allTags.filter((el) => el.trim() !== '');
+    const tagList = allTags.filter((el: string) => el.trim() !== '');
     const newData = { body, description, title, tagList };
 
     if (!slug) {
@@ -104,7 +110,7 @@ const CreateArticle: FC = () => {
     unregister('tags0');
     if (inputState.trim()) {
       setErrorTags(false);
-      setTag([...tag, { v: inputState.trim(), id: maxId++ }]);
+      setTag([...tag, { v: inputState.trim(), id: String(maxId++) }]);
       setInputState('');
     } else {
       setErrorTags(true);
@@ -126,6 +132,7 @@ const CreateArticle: FC = () => {
       flexDirection={'column'}
       alignItems="center"
       gap="21px"
+      boxShadow="lg"
     >
       <Heading fontSize={'20px'} lineHeight={'28px'} mt={'48px'}>
         {slug ? 'Edit article' : 'Create new article'}

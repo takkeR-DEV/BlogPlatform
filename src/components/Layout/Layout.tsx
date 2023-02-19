@@ -4,7 +4,7 @@ import { Outlet } from 'react-router-dom';
 import Header from '../Header/Header';
 import lo from './Layout.module.scss';
 
-const Layout: FC<any> = () => {
+const Layout: FC = () => {
   return (
     <div className={lo.wrapper}>
       <Header />

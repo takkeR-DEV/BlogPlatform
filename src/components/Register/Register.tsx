@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import reg from './Register.module.scss';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { authRegister } from '../../store/action-creator/auth';
+import { DataFormAuth } from '../../types/auth';
 
 const Register: FC<any> = () => {
   const { logined, error } = useAppSelector((state) => state.authReducer);
@@ -33,7 +34,7 @@ const Register: FC<any> = () => {
     mode: 'onBlur',
   });
 
-  const test = (data: any) => {
+  const test = (data: DataFormAuth) => {
     dispatch(authRegister(data));
   };
 
@@ -47,6 +48,7 @@ const Register: FC<any> = () => {
       bg="white"
       minH="599px"
       borderRadius="6px"
+      boxShadow="lg"
     >
       <Heading fontSize="20px" pt="48px" mb="21px">
         Create new account
@@ -62,11 +64,11 @@ const Register: FC<any> = () => {
               required: 'This field should not be empty',
               minLength: {
                 value: 3,
-                message: 'min 3',
+                message: 'Minimum 3 characters',
               },
               maxLength: {
                 value: 20,
-                message: 'max 20',
+                message: 'Maximum 20 characters',
               },
             })}
             placeholder="Username"
@@ -106,11 +108,11 @@ const Register: FC<any> = () => {
               required: 'This field should not be empty',
               minLength: {
                 value: 6,
-                message: 'min 6',
+                message: 'Minimum 6 characters',
               },
               maxLength: {
                 value: 40,
-                message: 'max 20',
+                message: 'Maximum 40 characters',
               },
             })}
           />

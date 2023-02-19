@@ -7,18 +7,22 @@ import {
   PopoverFooter,
   PopoverTrigger,
 } from '@chakra-ui/react';
-import { FC, useRef } from 'react';
+import { FC, RefObject, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks/redux';
 import { deleteArticle, fetchArticles } from '../../store/action-creator/articles';
 
-const ModalDelete: FC<any> = ({ slug, token }) => {
-  // const { isOpen, onOpen, onClose } = useDisclosure();
-  const initRef: any = useRef();
+interface ModalType {
+  slug: string;
+  token: string | undefined;
+}
+
+const ModalDelete: FC<ModalType> = ({ slug, token }) => {
+  const initRef = useRef<RefObject<{ focus(): void }> | any>();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const delArticle = (onClose: any): any => {
+  const delArticle = (onClose: () => void) => {
     onClose();
     dispatch(deleteArticle(slug, token)).then(() => dispatch(fetchArticles(1)).then(() => navigate('/articles')));
   };

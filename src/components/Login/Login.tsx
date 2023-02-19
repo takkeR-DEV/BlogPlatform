@@ -18,9 +18,10 @@ import { useForm } from 'react-hook-form';
 import { Link as LinkRoute, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { authLogin } from '../../store/action-creator/auth';
+import { DataFormAuth } from '../../types/auth';
 import login from './Login.module.scss';
 
-const Register: FC<any> = () => {
+const Register: FC = () => {
   const toast = useToast();
   const dispatch = useAppDispatch();
   const { logined, error } = useAppSelector((state) => state.authReducer);
@@ -59,7 +60,7 @@ const Register: FC<any> = () => {
     }
   }, [error]);
 
-  const test = (data: any) => {
+  const test = (data: DataFormAuth) => {
     dispatch(authLogin(data));
   };
 
@@ -74,17 +75,19 @@ const Register: FC<any> = () => {
       bg="white"
       minH="374px"
       borderRadius="6px"
+      boxShadow="lg"
     >
       <Heading fontSize="20px" pt="48px">
         Sign In
       </Heading>
-      <form className={login.formreg} onSubmit={handleSubmit(test)}>
+      <form className={login.formreg} onSubmit={handleSubmit(test)} noValidate>
         <label>
           <Text fontSize={'14px'}>Email address</Text>
           <Input
             focusBorderColor={errors?.email ? 'red.400' : 'black'}
             w={'320px'}
             h={'40px'}
+            type="email"
             placeholder="Email address"
             {...register('email', {
               required: 'This field should not be empty',

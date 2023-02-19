@@ -1,16 +1,16 @@
 export interface IArticles {
-  slug?: string;
+  slug: string;
   title?: string;
   description?: string;
   body: string;
-  createdAt?: string;
+  createdAt: string;
   updatedAt?: string;
-  tagList?: string[];
-  favorited?: boolean;
-  favoritesCount?: number;
-  author?: {
+  tagList: string[];
+  favorited: boolean;
+  favoritesCount: number;
+  author: {
     username?: string;
-    image?: boolean;
+    image: string;
     following?: boolean;
   };
 }

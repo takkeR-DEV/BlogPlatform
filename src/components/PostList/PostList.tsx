@@ -7,7 +7,7 @@ import Post from '../Post/Post';
 const PostList: FC<any> = ({ articlesData }) => {
   return (
     <Box maxW="942px" m="0 auto" display="flex" flexDirection="column" gap="26px">
-      {articlesData.map((data: any) => (
+      {articlesData.map((data: IArticles) => (
         <Post key={data.slug} data={data} />
       ))}
     </Box>

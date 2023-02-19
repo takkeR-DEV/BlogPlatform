@@ -6,6 +6,7 @@ import { useParams, Link as ReachLink, useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../../hooks/redux';
 import ModalDelete from '../ModalDelete/ModalDelete';
 import { delFavorite, postFavorite } from '../../service/api/apiFavorites';
+import { IArticles } from '../../types/articles';
 
 const count = () => {
   let id = 0;
@@ -15,7 +16,13 @@ const count = () => {
 };
 const id = count();
 
-const Post: FC<any> = ({ data, checkSlug, showmore }) => {
+interface PostType {
+  data: IArticles;
+  checkSlug?: string;
+  showmore?: boolean;
+}
+
+const Post: FC<PostType> = ({ data, checkSlug, showmore }) => {
   const navigate = useNavigate();
   const { user, logined } = useAppSelector((state) => state.authReducer);
 
@@ -24,12 +31,12 @@ const Post: FC<any> = ({ data, checkSlug, showmore }) => {
   const { slug } = useParams();
 
   const btn = () => {
-    setActive((active: string) => !active);
+    setActive((active) => !active);
     setCount(() => (active ? count - 1 : count + 1));
     !active ? postFavorite(data.slug, user.token) : delFavorite(data.slug, user.token);
   };
   return (
-    <Box bg="white" maxW="942px" h="127px" maxH="140px" p="19px" w="941px">
+    <Box bg="white" maxW="942px" h="127px" maxH="140px" p="19px" w="941px" boxShadow={!showmore ? 'lg' : 'none'}>
       <Box display="flex" justifyContent="space-between">
         <Box mb="10px">
           <Box display="flex">
@@ -68,16 +75,16 @@ const Post: FC<any> = ({ data, checkSlug, showmore }) => {
             )}
             <span>{count}</span>
           </Box>
-          <Box maxW="550px" maxH="25px" overflow="hidden">
+          <Box maxW="550px" maxH="30px" overflow="hidden">
             {data.tagList.map((tag: string, index: number) => {
               if (!index)
                 return (
-                  <Tag variant="outline" colorScheme="gray" key={id()} mr="5px">
+                  <Tag variant="outline" colorScheme="gray" key={id()} mr="5px" mt="5px">
                     {tag}
                   </Tag>
                 );
               return (
-                <Tag colorScheme="gray" key={id()} variant="outline" opacity="0.7" mr="5px">
+                <Tag colorScheme="gray" key={id()} variant="outline" opacity="0.7" mr="5px" mt="5px">
                   {tag}
                 </Tag>
               );
