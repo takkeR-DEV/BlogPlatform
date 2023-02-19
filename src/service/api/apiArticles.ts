@@ -12,7 +12,18 @@ export const newArticlePost = async (data: any): Promise<any> => {
   } catch (error) {
     console.log(error);
   }
+};
 
-  // return await axios.get(`https://blog.kata.academy/api/articles/${slug}`);
-  // console.log(res);
+export const editArticlePost = async (data: any, slug: string): Promise<any> => {
+  try {
+    console.log('я тут', data);
+    const token = localStorage.getItem('token');
+    axios.defaults.headers.common['Authorization'] = `Token ${token}`;
+    const res = await axios.put(`https://blog.kata.academy/api/articles/${slug}`, {
+      article: { ...data },
+    });
+    return res.data.article;
+  } catch (error) {
+    console.log(error);
+  }
 };

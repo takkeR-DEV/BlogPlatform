@@ -1,60 +1,35 @@
-import { Box, Button, Heading, Input, ListItem, Text, Textarea, UnorderedList, useToast } from '@chakra-ui/react';
+import { Box, Button, Heading, Input, Text, Textarea, useToast } from '@chakra-ui/react';
 import { FC, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { editArticlePost, newArticlePost } from '../../service/api/apiArticles';
+import { newArticlePost } from '../../service/api/apiArticles';
 import { getPostSlug } from '../../service/api/apiPostSlug';
-import newArticle from './CreateArticle.module.scss';
+import newArticle from './EditArticle.module.scss';
 
 let maxId = 1;
 
 const CreateArticle: FC = () => {
   const { logined, user } = useAppSelector((state) => state.authReducer);
 
-  const { slug } = useParams();
-  const [dataTitle, setDataTitle] = useState<string>('');
-  const [dataDesc, setDataDesc] = useState<string>('');
-  const [dataBody, setDataBody] = useState<string>('');
+  const [data, setData] = useState<any>('');
   const [loading, setLoading] = useState<any>(false);
-  const [tag, setTag] = useState<any[]>([]);
-  const [inputState, setInputState] = useState<any>('');
-  const [errorTags, setErrorTags] = useState(false);
-  const toast = useToast();
-  console.log(loading);
+  const { slug } = useParams();
 
   useEffect(() => {
-    clearState();
-    if (slug) {
-      setLoading(true);
-      getPostSlug(slug).then((el) => {
-        setLoading(false);
-        setDataState(el);
-      });
-    }
+    setLoading(true);
+    getPostSlug(slug).then((el) => {
+      setLoading(false);
+      setData(el.data.article.title);
+    });
   }, [slug]);
-
-  const clearState = () => {
-    reset();
-    setTag([]);
-  };
-
-  const setDataState = (el: any) => {
-    setValue('title', el.data.article.title);
-    setValue('description', el.data.article.description);
-    setValue('body', el.data.article.body);
-    // setDataDesc(el.data.article.description);
-    // setDataTitle(el.data.article.title);
-    // setDataBody(el.data.article.body);
-    setTag(
-      el.data.article.tagList.map((elem: any) => {
-        return { v: elem, id: maxId++ };
-      })
-    );
-  };
-  console.log(dataTitle);
+  console.log(data);
 
   console.log('я получил slug', slug);
+
+  const [tag, setTag] = useState<any[]>([]);
+  const [inputState, setInputState] = useState<any>('');
+  const toast = useToast();
 
   console.log(inputState);
 
@@ -72,29 +47,16 @@ const CreateArticle: FC = () => {
     const newData = { body, description, title, tagList };
 
     console.log(newData);
-    if (!slug) {
-      newArticlePost(newData).then((data) => {
-        navigate(`/articles/${data.slug}`);
-        toast({
-          position: 'bottom-right',
-          colorScheme: 'green',
-          status: 'success',
-          title: 'Successfully',
-          description: 'You have successfully created a post',
-        });
+    newArticlePost(newData).then((data) => {
+      navigate(`/articles/${data.slug}`);
+      toast({
+        position: 'bottom-right',
+        colorScheme: 'green',
+        status: 'success',
+        title: 'Successfully',
+        description: 'You have successfully created a post',
       });
-    } else {
-      editArticlePost(newData, slug).then((data) => {
-        navigate(`/articles/${data.slug}`);
-        toast({
-          position: 'bottom-right',
-          colorScheme: 'green',
-          status: 'success',
-          title: 'Successfully',
-          description: 'You have successfully edit a post',
-        });
-      });
-    }
+    });
   };
 
   const {
@@ -103,8 +65,6 @@ const CreateArticle: FC = () => {
     handleSubmit,
     unregister,
     getValues,
-    setValue,
-    reset,
     watch,
   } = useForm({
     mode: 'onBlur',
@@ -113,12 +73,9 @@ const CreateArticle: FC = () => {
   const addTag = () => {
     unregister('tags0');
     if (inputState.trim()) {
-      setErrorTags(false);
       setTag([...tag, { v: inputState.trim(), id: maxId++ }]);
       setInputState('');
       console.log(inputState.trim());
-    } else {
-      setErrorTags(true);
     }
   };
 
@@ -146,18 +103,18 @@ const CreateArticle: FC = () => {
         <label>
           <Text fontSize={'14px'}>Title</Text>
           <Input
+            value={data}
             w={'874px'}
             h={'40px'}
             {...register('title', {
-              value: dataTitle,
               required: 'This field should not be empty',
               minLength: {
                 value: 3,
-                message: 'Minimum 3 characters',
+                message: 'min 3',
               },
               maxLength: {
-                value: 60,
-                message: 'Minimum 60 characters',
+                value: 20,
+                message: 'max 20',
               },
             })}
             placeholder="Title"
@@ -174,16 +131,7 @@ const CreateArticle: FC = () => {
             h={'40px'}
             placeholder="Title"
             {...register('description', {
-              value: dataDesc,
               required: 'This field should not be empty',
-              minLength: {
-                value: 3,
-                message: 'Minimum 3 characters',
-              },
-              maxLength: {
-                value: 60,
-                message: 'Minimum 60 characters',
-              },
             })}
           />
           <Text fontSize={'14px'} color="red">
@@ -197,11 +145,10 @@ const CreateArticle: FC = () => {
             h={'168px'}
             placeholder="Text"
             {...register('body', {
-              value: dataBody,
               required: 'This field should not be empty',
               minLength: {
-                value: 3,
-                message: 'Minimum 3 characters',
+                value: 6,
+                message: 'min 6',
               },
             })}
           />
@@ -211,9 +158,9 @@ const CreateArticle: FC = () => {
         </label>
         <label>
           <Text fontSize={'14px'}>tags</Text>
-          <UnorderedList m={0}>
+          <>
             {tag.map((el) => (
-              <ListItem key={el.id} display={'flex'}>
+              <Box key={el.id} display={'flex'}>
                 <Input
                   focusBorderColor={errors?.email ? 'red.400' : 'black'}
                   mb="5px"
@@ -228,40 +175,44 @@ const CreateArticle: FC = () => {
                 <Button m="0 10px" variant={'outline'} colorScheme="red" onClick={() => delTag(el.id)}>
                   DELETE
                 </Button>
-              </ListItem>
+                <Text fontSize={'14px'} color="red">
+                  {errors?.tags && <>{errors?.tags?.message || 'Error'}</>}{' '}
+                </Text>
+              </Box>
             ))}
-
-            <Box display={'flex'}>
-              <Input
-                w={'300px'}
-                h={'40px'}
-                value={inputState}
-                placeholder="Title"
-                {...register('tags0', {
-                  onChange: (e) => {
-                    setInputState(e.target.value);
-                    setErrorTags(false);
-                  },
-                })}
-              />
-
-              <Button
-                m={'0 10px'}
-                variant={'outline'}
-                colorScheme="red"
-                onClick={() => {
-                  setInputState('');
-                  unregister('tags0');
-                }}
-              >
-                DELETE
-              </Button>
-              <Button variant={'outline'} colorScheme="blue" onClick={() => addTag()}>
-                ADD
-              </Button>
-            </Box>
-          </UnorderedList>
-          {errorTags ? <Text color="red">This field should not be empty</Text> : null}
+          </>
+          <Box display={'flex'}>
+            <Input
+              focusBorderColor={errors?.email ? 'red.400' : 'black'}
+              w={'300px'}
+              h={'40px'}
+              value={inputState}
+              placeholder="Title"
+              {...register('tags0', {
+                onChange: (e) => {
+                  setInputState(e.target.value);
+                },
+                // setValueAs: (v) => setInputState(v),
+              })}
+            />
+            <Button
+              m={'0 10px'}
+              variant={'outline'}
+              colorScheme="red"
+              onClick={() => {
+                setInputState('');
+                unregister('tags0');
+              }}
+            >
+              DELETE
+            </Button>
+            <Button variant={'outline'} colorScheme="blue" onClick={() => addTag()}>
+              ADD
+            </Button>
+            <Text fontSize={'14px'} color="red">
+              {errors?.description && <>{errors?.description?.message || 'Error'}</>}{' '}
+            </Text>
+          </Box>
         </label>
         <Button colorScheme="blue" mt="12px" type="submit" w="319px" h="40px" mb="8px">
           Send

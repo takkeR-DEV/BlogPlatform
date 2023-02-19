@@ -14,6 +14,7 @@ import Login from '../Login/Login';
 import EditProfile from '../EditProfile/EditProfile';
 import { authSession } from '../../store/action-creator/auth';
 import CreateArticle from '../CreateArticle/CreateArticle';
+import EditArticle from '../EditArticle/EditArticle';
 
 function App() {
   // const { loading } = useAppSelector((state) => state.articlesReducer);
