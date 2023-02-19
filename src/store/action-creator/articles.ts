@@ -21,11 +21,8 @@ export const fetchArticles = (page: number) => async (dispatch: AppDispatch) => 
 
 export const deleteArticle = (slug: string, token: string) => async (dispatch: AppDispatch) => {
   try {
-    console.log('2222222222222222', slug, token);
-
     axios.defaults.headers.common['Authorization'] = `Token ${token}`;
     const res = await axios.delete<any>(`https://blog.kata.academy/api/articles/${slug}`);
-    console.log('hhhhhhhhhhhhhhhhhhhhh', res);
   } catch (error: any) {}
 };
 

@@ -14,13 +14,8 @@ import Login from '../Login/Login';
 import EditProfile from '../EditProfile/EditProfile';
 import { authSession } from '../../store/action-creator/auth';
 import CreateArticle from '../CreateArticle/CreateArticle';
-import EditArticle from '../EditArticle/EditArticle';
 
 function App() {
-  // const { loading } = useAppSelector((state) => state.articlesReducer);
-  // const { logined } = useAppSelector((state) => state.authReducer);
-
-  console.log('12egwegewgewgewg>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
   const {} = articlesSlice.actions;
   const dispatch = useAppDispatch();
 
@@ -28,13 +23,6 @@ function App() {
     dispatch(fetchArticles(1));
     dispatch(authSession());
   }, []);
-
-  // const [page, setPage] = React.useState(0);
-  // const handlePageClick = (p: number) => {
-  //   console.log(p);
-  //   setPage(p);
-  //   dispatch(fetchArticles(p + 1));
-  // };
 
   return (
     <ChakraProvider>

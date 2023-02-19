@@ -6,7 +6,6 @@ import { authSlice } from '../reducers/authReducer';
 //Register
 export const authRegister = (data: any) => async (dispatch: AppDispatch) => {
   try {
-    console.log('Auth', data);
     dispatch(authSlice.actions.authFetch());
 
     const res = await axios.post('https://blog.kata.academy/api/users', {
@@ -17,17 +16,15 @@ export const authRegister = (data: any) => async (dispatch: AppDispatch) => {
       },
     });
     dispatch(authSlice.actions.authRegister());
+    dispatch(authSlice.actions.authUser(res.data.user));
     localStorage.setItem('token', res.data.user.token);
-    console.log('>>>>>>>>>', res);
   } catch (error: any) {
-    console.log(error.response.data.errors);
     dispatch(authSlice.actions.authError(error.response.data.errors));
   }
 };
 // Login
 export const authLogin = (data: any) => async (dispatch: AppDispatch) => {
   try {
-    console.log('AuthLogin', data);
     dispatch(authSlice.actions.authFetch());
     const res = await axios.post('https://blog.kata.academy/api/users/login', {
       user: {
@@ -38,10 +35,7 @@ export const authLogin = (data: any) => async (dispatch: AppDispatch) => {
     dispatch(authSlice.actions.authLogin());
     localStorage.setItem('token', res.data.user.token);
     dispatch(authSlice.actions.authUser(res.data.user));
-    console.log('>>>>>>>>>', res);
   } catch (error: any) {
-    console.log(error.response.data.errors);
-
     dispatch(authSlice.actions.authError(error.response.data.errors));
   }
 };
@@ -49,11 +43,7 @@ export const authLogin = (data: any) => async (dispatch: AppDispatch) => {
 export const editProfile = (data: any, token: string | undefined) => async (dispatch: AppDispatch) => {
   try {
     dispatch(authSlice.actions.authFetch());
-
-    console.log('editProfile', data);
     const newData = { ...data };
-    // !data.avatar ? delete newData.image : null;
-    console.log('editProfileNew', newData);
     axios.defaults.headers.common['Authorization'] = `Token ${token}`;
     const res = await axios.put('https://blog.kata.academy/api/user/', {
       user: {
@@ -63,12 +53,7 @@ export const editProfile = (data: any, token: string | undefined) => async (disp
 
     dispatch(authSlice.actions.authLogin());
     dispatch(authSlice.actions.authUser(res.data.user));
-    console.log('>>>>>>>>>', res);
-
-    // const res = await axios.get<any>('https://blog.kata.academy/api/articles?&limit=5&offset');
-    // dispatch(authSlice.actions.authRegister());
   } catch (error: any) {
-    console.log(error.response.data.errors);
     dispatch(authSlice.actions.authError(error.response.data.errors));
   }
 };
@@ -83,10 +68,8 @@ export const authSession = () => async (dispatch: AppDispatch) => {
 
       dispatch(authSlice.actions.authLogin());
       dispatch(authSlice.actions.authUser(res.data.user));
-      console.log('>>>>>>>>>', res);
     } else return;
   } catch (error: any) {
-    console.log(error.response.data.errors);
     dispatch(authSlice.actions.authError(error.response.data.errors));
   }
 };

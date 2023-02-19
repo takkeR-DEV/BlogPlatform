@@ -9,8 +9,6 @@ import ep from './EditProfile.module.scss';
 const EditProfile: FC = () => {
   const { logined, user } = useAppSelector((state) => state.authReducer);
 
-  console.log('Проверка', user);
-
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const {
@@ -23,7 +21,6 @@ const EditProfile: FC = () => {
     mode: 'onBlur',
   });
   const editProf = (data: any) => {
-    console.log(data);
     dispatch(editProfile(data, user.token));
   };
   return (

@@ -21,7 +21,6 @@ const CreateArticle: FC = () => {
   const [inputState, setInputState] = useState<any>('');
   const [errorTags, setErrorTags] = useState(false);
   const toast = useToast();
-  console.log(loading);
 
   useEffect(() => {
     clearState();
@@ -43,20 +42,12 @@ const CreateArticle: FC = () => {
     setValue('title', el.data.article.title);
     setValue('description', el.data.article.description);
     setValue('body', el.data.article.body);
-    // setDataDesc(el.data.article.description);
-    // setDataTitle(el.data.article.title);
-    // setDataBody(el.data.article.body);
     setTag(
       el.data.article.tagList.map((elem: any) => {
         return { v: elem, id: maxId++ };
       })
     );
   };
-  console.log(dataTitle);
-
-  console.log('я получил slug', slug);
-
-  console.log(inputState);
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -67,11 +58,10 @@ const CreateArticle: FC = () => {
   const test = (data: any) => {
     const { body, description, title, ...tags } = data;
 
-    const allTags = Object.entries(tags).map((el) => el[1]);
-    const tagList = allTags.filter((el: any) => el.trim() !== '');
+    const allTags: any[] = Object.entries(tags).map((el) => el[1]);
+    const tagList = allTags.filter((el) => el.trim() !== '');
     const newData = { body, description, title, tagList };
 
-    console.log(newData);
     if (!slug) {
       newArticlePost(newData).then((data) => {
         navigate(`/articles/${data.slug}`);
@@ -116,7 +106,6 @@ const CreateArticle: FC = () => {
       setErrorTags(false);
       setTag([...tag, { v: inputState.trim(), id: maxId++ }]);
       setInputState('');
-      console.log(inputState.trim());
     } else {
       setErrorTags(true);
     }
@@ -125,7 +114,6 @@ const CreateArticle: FC = () => {
   const delTag = (elt: string) => {
     setTag((tag) => tag.filter((el) => el.id !== elt));
     unregister(`tags${elt}`);
-    console.log(tag, elt);
   };
 
   return (

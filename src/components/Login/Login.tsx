@@ -13,33 +13,23 @@ import {
   Spinner,
   useToast,
 } from '@chakra-ui/react';
-import { FC, FormEvent, useEffect, useState } from 'react';
+import { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link as LinkRoute, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { authLogin } from '../../store/action-creator/auth';
 import login from './Login.module.scss';
-// interface RegisterProps {}
 
 const Register: FC<any> = () => {
   const toast = useToast();
   const dispatch = useAppDispatch();
-  const { logined, error, authLoading } = useAppSelector((state) => state.authReducer);
-  // const [username, setUsername] = useState('');
-  // const [email, setEmail] = useState('');
-  // const [password, setPassword] = useState('');
-  // const [repeatPassword, setRepeatPassword] = useState('');
-  // const test = (e: FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   console.log(username);
-  // };
+  const { logined, error } = useAppSelector((state) => state.authReducer);
+
   const navigate = useNavigate();
   const {
     register,
     formState: { errors },
     handleSubmit,
-    getValues,
-    watch,
   } = useForm({
     mode: 'onBlur',
   });
@@ -55,7 +45,6 @@ const Register: FC<any> = () => {
         description: 'You have successfully logged in',
       });
     }
-    console.log('я тут');
   }, [logined]);
 
   useEffect(() => {
@@ -68,11 +57,9 @@ const Register: FC<any> = () => {
         description: 'Incorrect email or password',
       });
     }
-    console.log('я тут');
   }, [error]);
 
   const test = (data: any) => {
-    console.log(data);
     dispatch(authLogin(data));
   };
 

@@ -21,7 +21,6 @@ const Register: FC<any> = () => {
         description: 'You have successfully registered',
       });
     }
-    console.log('я тут');
   }, [logined]);
   const dispatch = useAppDispatch();
   const {
@@ -35,7 +34,6 @@ const Register: FC<any> = () => {
   });
 
   const test = (data: any) => {
-    console.log(data);
     dispatch(authRegister(data));
   };
 

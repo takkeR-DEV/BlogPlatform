@@ -10,7 +10,7 @@ interface HeaderProps {}
 
 const Header: FC<HeaderProps> = () => {
   const { logined, user } = useAppSelector((state) => state.authReducer);
-  const defaultImage = 'https://bashny.net/uploads/images/00/00/35/2015/09/06/b59f02bc10.jpg';
+  const defaultImage = 'https://static.productionready.io/images/smiley-cyrus.jpg';
 
   const navigate = useNavigate();
   const toast = useToast();
@@ -26,8 +26,6 @@ const Header: FC<HeaderProps> = () => {
     });
     navigate('/');
   };
-
-  console.log('я перерендериваюсь');
 
   return (
     <header className={header.header}>
@@ -67,7 +65,7 @@ const Header: FC<HeaderProps> = () => {
             <Link as={RouteLink} fontSize="18px" fontWeight="500" to="/profile">
               <Box display={'flex'} gap="10px" alignItems={'center'}>
                 <Text fontSize={'18px'} lineHeight="28px">
-                  {user.username}
+                  {user.username ? user.username : '213'}
                 </Text>
                 <Image borderRadius="full" boxSize="46px" src={user.image ? user.image : defaultImage} alt="аватар" />
               </Box>

@@ -19,7 +19,6 @@ const ModalDelete: FC<any> = ({ slug, token }) => {
   const navigate = useNavigate();
 
   const delArticle = (onClose: any): any => {
-    console.log('ffffff');
     onClose();
     dispatch(deleteArticle(slug, token)).then(() => dispatch(fetchArticles(1)).then(() => navigate('/articles')));
   };

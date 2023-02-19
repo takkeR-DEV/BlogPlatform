@@ -16,7 +16,6 @@ const PostPage: FC = () => {
   const dispatch = useAppDispatch();
   const [page, setPage] = useState(0);
   const handlePageClick = (p: number) => {
-    console.log(p);
     setPage(p);
     dispatch(fetchArticles(p + 1));
   };

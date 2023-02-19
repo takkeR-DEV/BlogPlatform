@@ -16,16 +16,12 @@ const count = () => {
 const id = count();
 
 const Post: FC<any> = ({ data, checkSlug, showmore }) => {
-  console.log('test', data);
-
   const navigate = useNavigate();
   const { user, logined } = useAppSelector((state) => state.authReducer);
-  console.log('gggggggggggg', data);
 
   const [active, setActive] = useState(data.favorited);
   const [count, setCount] = useState(data.favoritesCount);
   const { slug } = useParams();
-  console.log('>>>>>>>>>>>>>>>>>', slug);
 
   const btn = () => {
     setActive((active: string) => !active);
