@@ -6,11 +6,12 @@ import Post from '../components/Post/Post';
 import { getPostSlug } from '../service/api/apiPostSlug';
 import ReactMarkdown from 'react-markdown';
 import ChakraUIRenderer from 'chakra-ui-markdown-renderer';
+import { IArticles } from '../types/articles';
 
 const SinglePost = () => {
   const { slug } = useParams();
-  const [data, setData] = useState<any>(null);
-  const [loading, setLoading] = useState<any>(false);
+  const [data, setData] = useState<IArticles | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     setLoading(true);
@@ -36,7 +37,6 @@ const SinglePost = () => {
               p="20px"
             >
               <Post data={data} checkSlug={slug} showmore={true} />
-              {/* <Text m="0 20px 20px 20px">{data.body}</Text> */}
               <ReactMarkdown components={ChakraUIRenderer()} children={data.body} skipHtml />
             </Box>
           ) : null}

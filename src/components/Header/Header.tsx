@@ -62,7 +62,7 @@ const Header: FC<HeaderProps> = () => {
             >
               Create Article
             </Button>
-            <Link as={RouteLink} fontSize="18px" fontWeight="500" to="/profile">
+            <Link as={RouteLink} fontSize="18px" fontWeight="400" to="/profile">
               <Box display={'flex'} gap="10px" alignItems={'center'}>
                 <Text fontSize={'18px'} lineHeight="28px">
                   {user.username ? user.username : '213'}

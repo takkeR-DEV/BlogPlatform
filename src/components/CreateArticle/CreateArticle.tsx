@@ -10,7 +10,7 @@ import newArticle from './CreateArticle.module.scss';
 let maxId = 1;
 
 const CreateArticle: FC = () => {
-  const { logined, user } = useAppSelector((state) => state.authReducer);
+  const { logined } = useAppSelector((state) => state.authReducer);
 
   const { slug } = useParams();
   const [dataTitle, setDataTitle] = useState<string>('');
@@ -145,7 +145,7 @@ const CreateArticle: FC = () => {
               },
               maxLength: {
                 value: 60,
-                message: 'Minimum 60 characters',
+                message: 'Maximum 60 characters',
               },
             })}
             placeholder="Title"
@@ -170,7 +170,7 @@ const CreateArticle: FC = () => {
               },
               maxLength: {
                 value: 60,
-                message: 'Minimum 60 characters',
+                message: 'Maximum 60 characters',
               },
             })}
           />

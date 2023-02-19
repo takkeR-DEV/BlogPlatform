@@ -46,6 +46,7 @@ const Post: FC<any> = ({ data, checkSlug, showmore }) => {
             </Link>
             {active && logined ? (
               <IconButton
+                mr="3px"
                 isDisabled={!logined}
                 colorScheme="red"
                 aria-label="Like"
@@ -56,6 +57,7 @@ const Post: FC<any> = ({ data, checkSlug, showmore }) => {
               />
             ) : (
               <IconButton
+                mr="3px"
                 isDisabled={!logined}
                 aria-label="Like"
                 size="16px"
