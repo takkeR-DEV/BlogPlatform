@@ -51,7 +51,7 @@ const Register: FC<any> = () => {
       <Heading fontSize="20px" pt="48px" mb="21px">
         Create new account
       </Heading>
-      <form className={reg.formreg} onSubmit={handleSubmit(test)}>
+      <form className={reg.formreg} onSubmit={handleSubmit(test)} noValidate>
         <label>
           <Text fontSize={'14px'}>Username</Text>
           <Input
@@ -89,6 +89,7 @@ const Register: FC<any> = () => {
                 message: 'Incorrect mail',
               },
             })}
+            type="email"
           />
           <Text fontSize={'14px'} color="red">
             {errors?.email && <>{errors?.email?.message || 'Error'}</>}{' '}
