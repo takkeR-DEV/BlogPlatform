@@ -5,6 +5,8 @@ import { Routes, Route, Link } from 'react-router-dom';
 import Post from '../Post/Post';
 
 const PostList: FC<any> = ({ articlesData }) => {
+  console.log(articlesData);
+
   return (
     <Box maxW="942px" m="0 auto" display="flex" flexDirection="column" gap="26px">
       {articlesData.map((data: IArticles) => (

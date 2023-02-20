@@ -1,10 +1,11 @@
 import axios from 'axios';
 import { AppDispatch } from '..';
 import { useAppDispatch } from '../../hooks/redux';
+import { DataFormAuth, DataFormType } from '../../types/auth';
 import { authSlice } from '../reducers/authReducer';
 
 //Register
-export const authRegister = (data: any) => async (dispatch: AppDispatch) => {
+export const authRegister = (data: DataFormAuth) => async (dispatch: AppDispatch) => {
   try {
     dispatch(authSlice.actions.authFetch());
 
@@ -23,7 +24,7 @@ export const authRegister = (data: any) => async (dispatch: AppDispatch) => {
   }
 };
 // Login
-export const authLogin = (data: any) => async (dispatch: AppDispatch) => {
+export const authLogin = (data: DataFormAuth) => async (dispatch: AppDispatch) => {
   try {
     dispatch(authSlice.actions.authFetch());
     const res = await axios.post('https://blog.kata.academy/api/users/login', {
@@ -40,7 +41,7 @@ export const authLogin = (data: any) => async (dispatch: AppDispatch) => {
   }
 };
 //Edit Profile
-export const editProfile = (data: any, token: string | undefined) => async (dispatch: AppDispatch) => {
+export const editProfile = (data: DataFormType, token: string | undefined) => async (dispatch: AppDispatch) => {
   try {
     dispatch(authSlice.actions.authFetch());
     const newData = { ...data };
