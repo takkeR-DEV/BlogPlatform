@@ -27,23 +27,29 @@ const PostPage: FC = () => {
         </Stack>
       }
     >
-      <>
-        <PostList articlesData={articlesData} />
-        <Box display="flex" justifyContent="center">
-          <Paginate
-            size="sm"
-            page={page}
-            shadow="sm"
-            fontWeight="bold"
-            variant="outline"
-            selectedVariant="solid"
-            count={allPage}
-            pageSize={5}
-            colorScheme="blue"
-            onPageChange={handlePageClick}
-          />
-        </Box>
-      </>
+      {!loading && articlesData.length && !error ? (
+        <>
+          <PostList articlesData={articlesData} />
+          <Box display="flex" justifyContent="center">
+            <Paginate
+              size="sm"
+              page={page}
+              shadow="sm"
+              fontWeight="bold"
+              variant="outline"
+              selectedVariant="solid"
+              count={allPage}
+              pageSize={5}
+              colorScheme="blue"
+              onPageChange={handlePageClick}
+            />
+          </Box>
+        </>
+      ) : (
+        <Stack direction="row" display="flex" justifyContent="center" mt="20px">
+          <Spinner size="xl" color="blue.300" />
+        </Stack>
+      )}
     </Suspense>
   );
 };
