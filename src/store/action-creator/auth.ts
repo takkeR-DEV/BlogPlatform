@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { AppDispatch } from '..';
-import { useAppDispatch } from '../../hooks/redux';
 import { DataFormAuth, DataFormType } from '../../types/auth';
 import { authSlice } from '../reducers/authReducer';
 
