@@ -24,7 +24,6 @@ const SinglePost = () => {
       });
     }
   }, [slug, user.token]);
-  console.log(data);
 
   return (
     <>

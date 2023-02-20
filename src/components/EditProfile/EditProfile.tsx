@@ -23,8 +23,6 @@ const EditProfile: FC = () => {
   });
 
   const editProf = (data: DataFormType) => {
-    console.log('TS', data);
-
     dispatch(editProfile(data, user.token));
   };
   return (
