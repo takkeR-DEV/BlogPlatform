@@ -19,14 +19,14 @@ const PostPage: FC = () => {
     setPage(p);
     dispatch(fetchArticles(p + 1));
   };
+  const { articlesData, allPage, loading, error } = useAppSelector((state) => state.articlesReducer);
 
   useEffect(() => {
-    dispatch(fetchArticles(1));
+    if (slug) dispatch(fetchArticles(1));
   }, [slug]);
-  const { articlesData, allPage, loading, error } = useAppSelector((state) => state.articlesReducer);
   return (
     <>
-      {!loading ? (
+      {!loading && articlesData.length && !error ? (
         <>
           <PostList articlesData={articlesData} />
           <Box display="flex" justifyContent="center">
