@@ -1,6 +1,6 @@
 import { Box, Button, Link, Text, Image, IconButton, Tag } from '@chakra-ui/react';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
-import React, { FC, useState } from 'react';
+import { FC, useState } from 'react';
 import pc from './Post.module.scss';
 import { useParams, Link as ReachLink, useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../../hooks/redux';
@@ -127,5 +127,3 @@ const Post: FC<PostType> = ({ data, checkSlug, showmore }) => {
 };
 
 export default Post;
-
-//<Box bg="white" w="942px" h="140px" display="flex" mt="26px" justifyContent="center"></Box>;

@@ -54,19 +54,3 @@ const PostPage: FC = () => {
 };
 
 export { PostPage };
-
-// (
-//   <>
-//     <Stack direction="row" display="flex" justifyContent="center" mt="20px">
-//       <Spinner size="xl" color="blue.300" />
-//     </Stack>
-//   </>
-// ) : (
-//   <Box display="flex" justifyContent="center" mt="20px">
-//     <Alert status="error" w="260px">
-//       <AlertIcon />
-//       <AlertTitle>Error!</AlertTitle>
-//       <AlertDescription>Failed to load posts.</AlertDescription>
-//     </Alert>
-//   </Box>
-// )
