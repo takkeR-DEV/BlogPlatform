@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { IArticles } from '../../types/articles';
 
 export const getPostSlug = async (slug: string | undefined, token: string | undefined): Promise<any> => {
   try {

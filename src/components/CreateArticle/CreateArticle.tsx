@@ -5,7 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { editArticlePost, newArticlePost } from '../../service/api/apiArticles';
 import { getPostSlug } from '../../service/api/apiPostSlug';
-import { IArticles } from '../../types/articles';
+import { FormDataType, IArticles } from '../../types/articles';
 import newArticle from './CreateArticle.module.scss';
 
 let maxId = 1;
@@ -55,13 +55,7 @@ const CreateArticle: FC = () => {
   }, [logined]);
   const dispatch = useAppDispatch();
 
-  interface FormDataType {
-    body?: string;
-    description?: string;
-    title?: string;
-  }
-
-  const test = (data: FormDataType) => {
+  const test = (data: FormDataType): void => {
     const { body, description, title, ...tags } = data;
 
     const allTags: any[] = Object.entries(tags).map((el) => el[1]);
@@ -70,7 +64,7 @@ const CreateArticle: FC = () => {
 
     if (!slug) {
       newArticlePost(newData).then((data) => {
-        navigate(`/articles/${data.slug}`);
+        navigate(`/articles/${data?.slug}`);
         toast({
           position: 'bottom-right',
           colorScheme: 'green',
@@ -81,7 +75,7 @@ const CreateArticle: FC = () => {
       });
     } else {
       editArticlePost(newData, slug).then((data) => {
-        navigate(`/articles/${data.slug}`);
+        navigate(`/articles/${data?.slug}`);
         toast({
           position: 'bottom-right',
           colorScheme: 'green',

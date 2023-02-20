@@ -1,6 +1,7 @@
 import axios from 'axios';
+import { FormDataType, IArticles } from '../../types/articles';
 
-export const newArticlePost = async (data: any): Promise<any> => {
+export const newArticlePost = async (data: FormDataType): Promise<IArticles | undefined> => {
   try {
     const token = localStorage.getItem('token');
     axios.defaults.headers.common['Authorization'] = `Token ${token}`;
@@ -11,7 +12,7 @@ export const newArticlePost = async (data: any): Promise<any> => {
   } catch (error) {}
 };
 
-export const editArticlePost = async (data: any, slug: string): Promise<any> => {
+export const editArticlePost = async (data: FormDataType, slug: string): Promise<IArticles | undefined> => {
   try {
     const token = localStorage.getItem('token');
     axios.defaults.headers.common['Authorization'] = `Token ${token}`;

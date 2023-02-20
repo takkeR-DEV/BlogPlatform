@@ -22,7 +22,7 @@ export const articlesSlice = createSlice({
     articlesFetch(state) {
       state.loading = true;
     },
-    articlesFetchSuccess(state, action: PayloadAction<any>) {
+    articlesFetchSuccess(state, action: PayloadAction<SuccessArticlesType>) {
       state.loading = false;
       state.error = '';
       state.articlesData = action.payload.articles;
@@ -34,5 +34,10 @@ export const articlesSlice = createSlice({
     },
   },
 });
+
+interface SuccessArticlesType {
+  articles: IArticles[];
+  articlesCount: number;
+}
 
 export default articlesSlice.reducer;

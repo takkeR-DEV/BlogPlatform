@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { authRegister } from '../../store/action-creator/auth';
 import { DataFormAuth } from '../../types/auth';
 
-const Register: FC<any> = () => {
+const Register: FC = () => {
   const { logined, error } = useAppSelector((state) => state.authReducer);
   const toast = useToast();
   const navigate = useNavigate();
