@@ -14,6 +14,7 @@ import Login from '../Login/Login';
 import EditProfile from '../EditProfile/EditProfile';
 import { authSession } from '../../store/action-creator/auth';
 import CreateArticle from '../CreateArticle/CreateArticle';
+import RequireAuth from '../../hoc/RequireAuth';
 
 function App() {
   const {} = articlesSlice.actions;
@@ -34,7 +35,14 @@ function App() {
           <Route path="/sign-up/" element={<Register />} />
           <Route path="/sign-in/" element={<Login />} />
           <Route path="/profile/" element={<EditProfile />} />
-          <Route path="/new-article/" element={<CreateArticle />} />
+          <Route
+            path="/new-article/"
+            element={
+              <RequireAuth>
+                <CreateArticle />
+              </RequireAuth>
+            }
+          />
           <Route path="/articles/:slug/edit" element={<CreateArticle />} />
         </Route>
       </Routes>

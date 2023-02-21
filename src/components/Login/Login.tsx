@@ -15,7 +15,7 @@ import {
 } from '@chakra-ui/react';
 import { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link as LinkRoute, useNavigate } from 'react-router-dom';
+import { Link as LinkRoute, useLocation, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { authLogin } from '../../store/action-creator/auth';
 import { DataFormAuth } from '../../types/auth';
@@ -25,6 +25,9 @@ const Register: FC = () => {
   const toast = useToast();
   const dispatch = useAppDispatch();
   const { logined, error } = useAppSelector((state) => state.authReducer);
+
+  const location = useLocation();
+  const fromPage = location.state?.from?.pathname || '/articles';
 
   const navigate = useNavigate();
   const {
@@ -37,7 +40,7 @@ const Register: FC = () => {
 
   useEffect(() => {
     if (logined) {
-      navigate('/articles');
+      navigate(fromPage);
       toast({
         position: 'bottom-right',
         colorScheme: 'green',

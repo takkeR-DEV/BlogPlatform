@@ -1,5 +1,5 @@
 import { Box, Checkbox, Heading, Input, Text, Button, Link, useToast } from '@chakra-ui/react';
-import { FC, FormEvent, useEffect, useState } from 'react';
+import { FC, useEffect } from 'react';
 import { Link as LinkRoute, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import reg from './Register.module.scss';
@@ -10,6 +10,7 @@ import { DataFormAuth } from '../../types/auth';
 const Register: FC = () => {
   const { logined, error } = useAppSelector((state) => state.authReducer);
   const toast = useToast();
+
   const navigate = useNavigate();
   useEffect(() => {
     if (logined) {

@@ -1,7 +1,7 @@
 import { Box, Button, Heading, Input, ListItem, Text, Textarea, UnorderedList, useToast } from '@chakra-ui/react';
 import { FC, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { editArticlePost, newArticlePost } from '../../service/api/apiArticles';
 import { getPostSlug } from '../../service/api/apiPostSlug';
@@ -50,9 +50,9 @@ const CreateArticle: FC = () => {
   };
 
   const navigate = useNavigate();
-  useEffect(() => {
-    !logined ? navigate('/sign-in') : null;
-  }, [logined]);
+  // useEffect(() => {
+  //   !logined ? navigate('/sign-in') : null;
+  // }, [logined]);
   const dispatch = useAppDispatch();
 
   const test = (data: FormDataType): void => {
