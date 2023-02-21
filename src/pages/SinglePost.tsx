@@ -17,9 +17,6 @@ const SinglePost = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<ErrorObjectType>(errorObject);
 
-  console.log('body', token);
-  console.log('data', data);
-
   useEffect(() => {
     setError({ message: '', code: '', name: '' });
     setLoading(true);

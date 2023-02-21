@@ -41,7 +41,6 @@ const Register: FC = () => {
     register,
     formState: { errors },
     handleSubmit,
-    getValues,
     watch,
   } = useForm({
     mode: 'onBlur',

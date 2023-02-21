@@ -6,9 +6,6 @@ import { IArticles } from '../../types/articles';
 
 export const getPostSlug = async (slug: string | undefined, token: string | undefined): Promise<IArticles> => {
   try {
-    // const token = localStorage.getItem('token');
-    console.log(token);
-
     axios.defaults.headers.common['Authorization'] = `Token ${token}`;
     const res = await axios.get(`https://blog.kata.academy/api/articles/${slug}`);
 
