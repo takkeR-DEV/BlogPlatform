@@ -7,5 +7,7 @@ export const getPostSlug = async (slug: string | undefined, token: string | unde
     const res = await axios.get(`https://blog.kata.academy/api/articles/${slug}`);
 
     return res.data.article;
-  } catch (error) {}
+  } catch (error: any) {
+    throw error;
+  }
 };

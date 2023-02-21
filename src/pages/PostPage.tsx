@@ -1,4 +1,4 @@
-import { Box, Spinner, Stack } from '@chakra-ui/react';
+import { Alert, AlertDescription, AlertIcon, AlertTitle, Box, Spinner, Stack, Text } from '@chakra-ui/react';
 import { FC, lazy, Suspense, useEffect, useState } from 'react';
 import { Paginate } from 'react-paginate-chakra-ui';
 import { useParams } from 'react-router-dom';
@@ -17,7 +17,7 @@ const PostPage: FC = () => {
   const { articlesData, allPage, loading, error } = useAppSelector((state) => state.articlesReducer);
 
   useEffect(() => {
-    if (slug) dispatch(fetchArticles(1));
+    dispatch(fetchArticles(1));
   }, [slug]);
   return (
     <Suspense
@@ -47,7 +47,28 @@ const PostPage: FC = () => {
         </>
       ) : (
         <Stack direction="row" display="flex" justifyContent="center" mt="20px">
-          <Spinner size="xl" color="blue.300" />
+          {error ? (
+            <Alert
+              status="error"
+              variant="subtle"
+              flexDirection="column"
+              alignItems="center"
+              justifyContent="center"
+              textAlign="center"
+              height="200px"
+              width="500px"
+              m="0 auto"
+              borderRadius={'6px'}
+            >
+              <AlertIcon boxSize="40px" mr={0} />
+              <AlertTitle mt={4} mb={1} fontSize="lg">
+                Error
+              </AlertTitle>
+              <AlertDescription maxWidth="sm">An error has occurred contact the administrator</AlertDescription>
+            </Alert>
+          ) : (
+            <Spinner size="xl" color="blue.300" />
+          )}
         </Stack>
       )}
     </Suspense>
