@@ -6,8 +6,6 @@ import { IArticles } from '../../types/articles';
 import Post from '../Post/Post';
 
 const PostList: FC<IPostListProps> = ({ articlesData }) => {
-  console.log('TS', articlesData);
-
   return (
     <Box maxW="942px" m="0 auto" display="flex" flexDirection="column" gap="26px">
       {articlesData.map((data) => (

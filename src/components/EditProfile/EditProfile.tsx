@@ -1,4 +1,4 @@
-import { Box, Button, Heading, Input, Spinner, Stack, Text } from '@chakra-ui/react';
+import { Box, Button, Heading, Input, Spinner, Stack, Text, useToast } from '@chakra-ui/react';
 import { FC, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
@@ -9,6 +9,7 @@ import ep from './EditProfile.module.scss';
 
 const EditProfile: FC = () => {
   const { logined, user } = useAppSelector((state) => state.authReducer);
+  const toast = useToast();
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -23,7 +24,16 @@ const EditProfile: FC = () => {
   });
 
   const editProf = (data: DataFormType) => {
-    dispatch(editProfile(data, user.token));
+    dispatch(editProfile(data, user.token)).then(() => {
+      navigate('/articles/');
+      toast({
+        position: 'bottom-right',
+        colorScheme: 'green',
+        status: 'success',
+        title: 'Successfully',
+        description: 'You have successfully changed profile',
+      });
+    });
   };
   return (
     <>

@@ -27,8 +27,6 @@ const SinglePost = () => {
           setData(el);
         })
         .catch((e) => {
-          console.log(e);
-
           setLoading(false);
           setError({ message: e.message, code: e.code, name: e.name });
         });
