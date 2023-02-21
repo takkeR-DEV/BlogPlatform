@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-empty-interface */
 import { Box, Button, ButtonGroup, Link, Text, Image, useToast } from '@chakra-ui/react';
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { Link as RouteLink, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { LogOut } from '../../store/action-creator/auth';

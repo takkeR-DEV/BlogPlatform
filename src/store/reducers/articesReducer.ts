@@ -1,4 +1,4 @@
-import { createAction, createReducer, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IArticles } from '../../types/articles';
 
 interface ArticlesStateType {
@@ -7,7 +7,6 @@ interface ArticlesStateType {
   loading: boolean;
   error: string;
 }
-type AticlesArray = IArticles[];
 
 const initialState: ArticlesStateType = {
   articlesData: [],

@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 import { Box } from '@chakra-ui/react';
-import React, { FC } from 'react';
-import { Routes, Route, Link } from 'react-router-dom';
+import { FC } from 'react';
 import { IArticles } from '../../types/articles';
 import Post from '../Post/Post';
 

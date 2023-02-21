@@ -1,8 +1,8 @@
 import { Box, Button, Heading, Input, ListItem, Text, Textarea, UnorderedList, useToast } from '@chakra-ui/react';
 import { FC, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useAppSelector } from '../../hooks/redux';
 import { editArticlePost, newArticlePost } from '../../service/api/apiArticles';
 import { getPostSlug } from '../../service/api/apiPostSlug';
 import { FormDataType, IArticles } from '../../types/articles';
@@ -11,7 +11,7 @@ import newArticle from './CreateArticle.module.scss';
 let maxId = 1;
 
 const CreateArticle: FC = () => {
-  const { logined, user } = useAppSelector((state) => state.authReducer);
+  const { user } = useAppSelector((state) => state.authReducer);
 
   type TagsType = { v: string; id: string };
 
@@ -50,10 +50,6 @@ const CreateArticle: FC = () => {
   };
 
   const navigate = useNavigate();
-  // useEffect(() => {
-  //   !logined ? navigate('/sign-in') : null;
-  // }, [logined]);
-  const dispatch = useAppDispatch();
 
   const test = (data: FormDataType): void => {
     const { body, description, title, ...tags } = data;
@@ -92,10 +88,8 @@ const CreateArticle: FC = () => {
     formState: { errors },
     handleSubmit,
     unregister,
-    getValues,
     setValue,
     reset,
-    watch,
   } = useForm({
     mode: 'onBlur',
   });

@@ -1,7 +1,6 @@
 import { Box, Button, Link, Text, Image, IconButton, Tag } from '@chakra-ui/react';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 import { FC, useState } from 'react';
-import pc from './Post.module.scss';
 import { useParams, Link as ReachLink, useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../../hooks/redux';
 import ModalDelete from '../ModalDelete/ModalDelete';
@@ -28,7 +27,6 @@ const Post: FC<PostType> = ({ data, checkSlug, showmore }) => {
 
   const [active, setActive] = useState(data.favorited);
   const [count, setCount] = useState(data.favoritesCount);
-  const { slug } = useParams();
 
   const btn = () => {
     setActive((active) => !active);

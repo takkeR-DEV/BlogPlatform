@@ -1,18 +1,4 @@
-import {
-  Alert,
-  AlertTitle,
-  Box,
-  Button,
-  Checkbox,
-  Heading,
-  Input,
-  Link,
-  Text,
-  AlertIcon,
-  Stack,
-  Spinner,
-  useToast,
-} from '@chakra-ui/react';
+import { Alert, Box, Button, Heading, Input, Link, Text, AlertIcon, useToast } from '@chakra-ui/react';
 import { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link as LinkRoute, useLocation, useNavigate } from 'react-router-dom';

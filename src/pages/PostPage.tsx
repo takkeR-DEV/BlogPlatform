@@ -1,4 +1,4 @@
-import { Alert, AlertDescription, AlertIcon, AlertTitle, Box, Spinner, Stack, Text } from '@chakra-ui/react';
+import { Alert, AlertDescription, AlertIcon, AlertTitle, Box, Spinner, Stack } from '@chakra-ui/react';
 import { FC, lazy, Suspense, useEffect, useState } from 'react';
 import { Paginate } from 'react-paginate-chakra-ui';
 import { useParams } from 'react-router-dom';

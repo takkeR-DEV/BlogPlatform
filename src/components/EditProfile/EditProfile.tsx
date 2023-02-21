@@ -1,5 +1,5 @@
 import { Box, Button, Heading, Input, Spinner, Stack, Text, useToast } from '@chakra-ui/react';
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
@@ -8,7 +8,7 @@ import { DataFormType } from '../../types/auth';
 import ep from './EditProfile.module.scss';
 
 const EditProfile: FC = () => {
-  const { logined, user } = useAppSelector((state) => state.authReducer);
+  const { user } = useAppSelector((state) => state.authReducer);
   const toast = useToast();
 
   const navigate = useNavigate();
@@ -17,8 +17,6 @@ const EditProfile: FC = () => {
     register,
     formState: { errors },
     handleSubmit,
-    getValues,
-    watch,
   } = useForm({
     mode: 'onBlur',
   });
