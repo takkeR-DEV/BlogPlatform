@@ -23,8 +23,6 @@ const Register: FC = () => {
   const { logined, error } = useAppSelector((state) => state.authReducer);
   const toast = useToast();
 
-  console.log('REG', error);
-
   const navigate = useNavigate();
   useEffect(() => {
     if (logined) {

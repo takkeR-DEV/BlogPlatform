@@ -12,8 +12,6 @@ export const getPostSlug = async (slug: string | undefined): Promise<IArticles> 
 
     return res.data.article;
   } catch (error: any) {
-    console.log('упал в ошибку ');
-
     throw error;
   }
 };
