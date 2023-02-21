@@ -11,17 +11,31 @@ import { useAppSelector } from '../hooks/redux';
 
 const SinglePost = () => {
   const errorObject = { message: '', code: '', name: '' };
-  const { user } = useAppSelector((state) => state.authReducer);
+  const { user, token, logined } = useAppSelector((state) => state.authReducer);
   const { slug } = useParams();
   const [data, setData] = useState<IArticles | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<ErrorObjectType>(errorObject);
 
   useEffect(() => {
-    if (user.token) {
+    setError({ message: '', code: '', name: '' });
+    setLoading(true);
+    getPostSlug(slug)
+      .then((el) => {
+        setLoading(false);
+        setData(el);
+      })
+      .catch((e) => {
+        setLoading(false);
+        setError({ message: e.message, code: e.code, name: e.name });
+      });
+  }, [logined]);
+
+  useEffect(() => {
+    if (logined) {
       setError({ message: '', code: '', name: '' });
       setLoading(true);
-      getPostSlug(slug, user.token)
+      getPostSlug(slug)
         .then((el) => {
           setLoading(false);
           setData(el);
@@ -31,7 +45,7 @@ const SinglePost = () => {
           setError({ message: e.message, code: e.code, name: e.name });
         });
     }
-  }, [slug, user.token]);
+  }, [logined]);
 
   return (
     <>

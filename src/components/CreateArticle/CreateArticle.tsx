@@ -11,14 +11,14 @@ import newArticle from './CreateArticle.module.scss';
 let maxId = 1;
 
 const CreateArticle: FC = () => {
-  const { user } = useAppSelector((state) => state.authReducer);
+  const { user, token } = useAppSelector((state) => state.authReducer);
 
   type TagsType = { v: string; id: string };
 
   const { slug } = useParams();
-  const [dataTitle, setDataTitle] = useState<string>('');
-  const [dataDesc, setDataDesc] = useState<string>('');
-  const [dataBody, setDataBody] = useState<string>('');
+  // const [dataTitle, setDataTitle] = useState<string>('');
+  // const [dataDesc, setDataDesc] = useState<string>('');
+  // const [dataBody, setDataBody] = useState<string>('');
   const [tag, setTag] = useState<TagsType[]>([]);
   const [inputState, setInputState] = useState<string>('');
   const [errorTags, setErrorTags] = useState(false);
@@ -27,7 +27,7 @@ const CreateArticle: FC = () => {
   useEffect(() => {
     clearState();
     if (slug) {
-      getPostSlug(slug, user.token).then((el) => {
+      getPostSlug(slug).then((el) => {
         setDataState(el);
       });
     }
@@ -59,7 +59,7 @@ const CreateArticle: FC = () => {
     const newData = { body, description, title, tagList };
 
     if (!slug) {
-      newArticlePost(newData).then((data) => {
+      newArticlePost(newData, token).then((data) => {
         navigate(`/articles/${data?.slug}`);
         toast({
           position: 'bottom-right',
@@ -70,7 +70,7 @@ const CreateArticle: FC = () => {
         });
       });
     } else {
-      editArticlePost(newData, slug).then((data) => {
+      editArticlePost(newData, slug, token).then((data) => {
         navigate(`/articles/${data?.slug}`);
         toast({
           position: 'bottom-right',
@@ -131,7 +131,6 @@ const CreateArticle: FC = () => {
             w={'874px'}
             h={'40px'}
             {...register('title', {
-              value: dataTitle,
               required: 'This field should not be empty',
               minLength: {
                 value: 3,
@@ -156,7 +155,6 @@ const CreateArticle: FC = () => {
             h={'40px'}
             placeholder="Title"
             {...register('description', {
-              value: dataDesc,
               required: 'This field should not be empty',
               minLength: {
                 value: 3,
@@ -179,7 +177,6 @@ const CreateArticle: FC = () => {
             h={'168px'}
             placeholder="Text"
             {...register('body', {
-              value: dataBody,
               required: 'This field should not be empty',
               minLength: {
                 value: 3,

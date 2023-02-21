@@ -1,6 +1,6 @@
 import { Box, Button, Link, Text, Image, IconButton, Tag } from '@chakra-ui/react';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useParams, Link as ReachLink, useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../../hooks/redux';
 import ModalDelete from '../ModalDelete/ModalDelete';
@@ -23,10 +23,16 @@ interface PostType {
 
 const Post: FC<PostType> = ({ data, checkSlug, showmore }) => {
   const navigate = useNavigate();
-  const { user, logined } = useAppSelector((state) => state.authReducer);
+  const { user, logined, token } = useAppSelector((state) => state.authReducer);
 
   const [active, setActive] = useState(data.favorited);
   const [count, setCount] = useState(data.favoritesCount);
+
+  // useEffect(() => {
+  //   if (logined) {
+  //     setActive(data.favorited);
+  //   }
+  // }, [logined]);
 
   const btn = () => {
     setActive((active) => !active);

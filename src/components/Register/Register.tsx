@@ -1,4 +1,16 @@
-import { Box, Checkbox, Heading, Input, Text, Button, Link, useToast } from '@chakra-ui/react';
+import {
+  Box,
+  Checkbox,
+  Heading,
+  Input,
+  Text,
+  Button,
+  Link,
+  useToast,
+  Alert,
+  AlertIcon,
+  AlertDescription,
+} from '@chakra-ui/react';
 import { FC, useEffect } from 'react';
 import { Link as LinkRoute, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
@@ -8,8 +20,10 @@ import { authRegister } from '../../store/action-creator/auth';
 import { DataFormAuth } from '../../types/auth';
 
 const Register: FC = () => {
-  const { logined } = useAppSelector((state) => state.authReducer);
+  const { logined, error } = useAppSelector((state) => state.authReducer);
   const toast = useToast();
+
+  console.log('REG', error);
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -54,6 +68,14 @@ const Register: FC = () => {
       <Heading fontSize="20px" pt="48px" mb="21px">
         Create new account
       </Heading>
+      {error ? (
+        <Alert status="error" width={'360px'}>
+          <AlertIcon />
+          <AlertDescription>
+            {(error?.username && `Username ${error?.username}`) || (error?.email && `Email ${error?.email}`) || 'Error'}
+          </AlertDescription>
+        </Alert>
+      ) : null}
       <form className={reg.formreg} onSubmit={handleSubmit(test)} noValidate>
         <label>
           <Text fontSize={'14px'}>Username</Text>

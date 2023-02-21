@@ -7,17 +7,18 @@ import { useAppDispatch, useAppSelector } from '../hooks/redux';
 import { fetchArticles } from '../store/action-creator/articles';
 
 const PostPage: FC = () => {
+  const { token } = useAppSelector((state) => state.authReducer);
   const { slug } = useParams();
   const dispatch = useAppDispatch();
   const [page, setPage] = useState(0);
   const handlePageClick = (p: number) => {
     setPage(p);
-    dispatch(fetchArticles(p + 1));
+    dispatch(fetchArticles(p + 1, token));
   };
   const { articlesData, allPage, loading, error } = useAppSelector((state) => state.articlesReducer);
 
   useEffect(() => {
-    dispatch(fetchArticles(1));
+    dispatch(fetchArticles(1, token));
   }, [slug]);
   return (
     <Suspense

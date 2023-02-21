@@ -17,6 +17,7 @@ export const authRegister = (data: DataFormAuth) => async (dispatch: AppDispatch
     });
     dispatch(authSlice.actions.authRegister());
     dispatch(authSlice.actions.authUser(res.data.user));
+
     localStorage.setItem('token', res.data.user.token);
   } catch (error: any) {
     dispatch(authSlice.actions.authError(error.response.data.errors));
@@ -62,6 +63,7 @@ export const authSession = () => async (dispatch: AppDispatch) => {
   try {
     const token = localStorage.getItem('token');
     if (token) {
+      dispatch(authSlice.actions.authSetToken(token));
       dispatch(authSlice.actions.authFetch());
       axios.defaults.headers.common['Authorization'] = `Token ${token}`;
       const res = await axios.get('https://blog.kata.academy/api/user/', {});

@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { ChakraProvider } from '@chakra-ui/react';
 
-import { articlesSlice } from '../../store/reducers/articesReducer';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { fetchArticles } from '../../store/action-creator/articles';
 
@@ -17,13 +16,13 @@ import CreateArticle from '../CreateArticle/CreateArticle';
 import RequireAuth from '../../hoc/RequireAuth';
 
 function App() {
-  const {} = articlesSlice.actions;
   const dispatch = useAppDispatch();
+  const { token } = useAppSelector((state) => state.authReducer);
 
   useEffect(() => {
-    dispatch(fetchArticles(1));
+    dispatch(fetchArticles(1, token));
     dispatch(authSession());
-  }, []);
+  }, [token]);
 
   return (
     <ChakraProvider>

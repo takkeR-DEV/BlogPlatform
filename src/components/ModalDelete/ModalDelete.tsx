@@ -26,7 +26,9 @@ const ModalDelete: FC<ModalType> = ({ slug, token }) => {
 
   const delArticle = (onClose: () => void) => {
     onClose();
-    dispatch(deleteArticle(slug, token)).then(() => dispatch(fetchArticles(1)).then(() => navigate('/articles')));
+    dispatch(deleteArticle(slug, token)).then(() =>
+      dispatch(fetchArticles(1, token)).then(() => navigate('/articles'))
+    );
   };
 
   return (

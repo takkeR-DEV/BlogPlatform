@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface AuthStateType {
   logined: boolean;
-  error: string;
+  error: any;
   user: {
     username?: string;
     email?: string;
@@ -11,12 +11,14 @@ interface AuthStateType {
     image?: string;
   };
   authLoading: boolean;
+  token: string;
 }
 
 const initialState: AuthStateType = {
   logined: false,
   error: '',
   user: {},
+  token: '',
   authLoading: false,
 };
 export const authSlice = createSlice({
@@ -51,6 +53,10 @@ export const authSlice = createSlice({
       state.logined = false;
       state.error = '';
       state.user = {};
+    },
+    authSetToken(state, action: PayloadAction<string>) {
+      const f = 15;
+      state.token = action.payload;
     },
   },
 });
