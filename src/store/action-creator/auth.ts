@@ -19,6 +19,7 @@ export const authRegister = (data: DataFormAuth) => async (dispatch: AppDispatch
     dispatch(authSlice.actions.authUser(res.data.user));
 
     localStorage.setItem('token', res.data.user.token);
+    dispatch(authSlice.actions.authSetToken(res.data.user.token));
   } catch (error: any) {
     dispatch(authSlice.actions.authError(error.response.data.errors));
   }
@@ -35,6 +36,7 @@ export const authLogin = (data: DataFormAuth) => async (dispatch: AppDispatch) =
     });
     dispatch(authSlice.actions.authLogin());
     localStorage.setItem('token', res.data.user.token);
+    dispatch(authSlice.actions.authSetToken(res.data.user.token));
     dispatch(authSlice.actions.authUser(res.data.user));
   } catch (error: any) {
     dispatch(authSlice.actions.authError(error.response.data.errors));
@@ -79,5 +81,6 @@ export const authSession = () => async (dispatch: AppDispatch) => {
 //Log Out
 export const LogOut = () => (dispatch: AppDispatch) => {
   localStorage.removeItem('token');
+  dispatch(authSlice.actions.authSetToken(''));
   dispatch(authSlice.actions.authLogout());
 };
