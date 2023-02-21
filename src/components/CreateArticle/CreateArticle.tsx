@@ -27,7 +27,7 @@ const CreateArticle: FC = () => {
   useEffect(() => {
     clearState();
     if (slug) {
-      getPostSlug(slug).then((el) => {
+      getPostSlug(slug, token).then((el) => {
         setDataState(el);
       });
     }

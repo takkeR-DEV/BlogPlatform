@@ -17,10 +17,13 @@ const SinglePost = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<ErrorObjectType>(errorObject);
 
+  console.log('body', token);
+  console.log('data', data);
+
   useEffect(() => {
     setError({ message: '', code: '', name: '' });
     setLoading(true);
-    getPostSlug(slug)
+    getPostSlug(slug, token)
       .then((el) => {
         setLoading(false);
         setData(el);
@@ -29,23 +32,7 @@ const SinglePost = () => {
         setLoading(false);
         setError({ message: e.message, code: e.code, name: e.name });
       });
-  }, [logined]);
-
-  useEffect(() => {
-    if (logined) {
-      setError({ message: '', code: '', name: '' });
-      setLoading(true);
-      getPostSlug(slug)
-        .then((el) => {
-          setLoading(false);
-          setData(el);
-        })
-        .catch((e) => {
-          setLoading(false);
-          setError({ message: e.message, code: e.code, name: e.name });
-        });
-    }
-  }, [logined]);
+  }, [user.token]);
 
   return (
     <>

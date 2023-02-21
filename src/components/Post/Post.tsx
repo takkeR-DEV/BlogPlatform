@@ -28,11 +28,11 @@ const Post: FC<PostType> = ({ data, checkSlug, showmore }) => {
   const [active, setActive] = useState(data.favorited);
   const [count, setCount] = useState(data.favoritesCount);
 
-  // useEffect(() => {
-  //   if (logined) {
-  //     setActive(data.favorited);
-  //   }
-  // }, [logined]);
+  useEffect(() => {
+    if (logined) {
+      setActive(data.favorited);
+    }
+  }, [data]);
 
   const btn = () => {
     setActive((active) => !active);
