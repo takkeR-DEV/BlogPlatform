@@ -6,7 +6,9 @@ import {
   PopoverContent,
   PopoverFooter,
   PopoverTrigger,
+  Text,
 } from '@chakra-ui/react';
+import { WarningIcon } from '@chakra-ui/icons';
 import { FC, RefObject, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks/redux';
@@ -38,15 +40,18 @@ const ModalDelete: FC<ModalType> = ({ slug, token }) => {
           </PopoverTrigger>
           <PopoverContent w="240px" h="104px">
             <PopoverArrow />
-            <PopoverBody>Are you sure to delete this article?</PopoverBody>
-            <PopoverFooter border={'none'} display="flex" justifyContent={'flex-end'}>
-              <Button colorScheme="gray" variant={'outline'} mr={3} onClick={onClose} w="34px" h="24px">
+            <PopoverBody display={'flex'}>
+              <WarningIcon m="5px 9px 0 0" color="#FAAD14" />
+              <Text fontSize={'14px'}>Are you sure to delete this article?</Text>
+            </PopoverBody>
+            <PopoverFooter border={'none'} display="flex" justifyContent={'flex-end'} pb="13px" pr="16px">
+              <Button colorScheme="gray" variant={'outline'} mr={'8px'} onClick={onClose} w="34px" h="24px">
                 No
               </Button>
               <Button colorScheme="blue" w="34px" h="24px" onClick={() => delArticle(onClose)}>
                 Yes
               </Button>
-            </PopoverFooter>{' '}
+            </PopoverFooter>
           </PopoverContent>
         </>
       )}
