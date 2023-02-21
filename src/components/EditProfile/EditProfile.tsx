@@ -22,7 +22,6 @@ const EditProfile: FC = () => {
   } = useForm({
     mode: 'onBlur',
   });
-
   const editProf = (data: DataFormType) => {
     dispatch(editProfile(data, user.token)).then(() => {
       navigate('/articles/');
