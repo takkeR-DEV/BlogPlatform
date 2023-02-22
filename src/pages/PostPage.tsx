@@ -19,7 +19,7 @@ const PostPage: FC = () => {
 
   useEffect(() => {
     dispatch(fetchArticles(1, token));
-  }, [slug]);
+  }, [slug, token]);
   return (
     <Suspense
       fallback={

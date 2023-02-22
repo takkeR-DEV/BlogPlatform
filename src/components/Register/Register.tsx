@@ -11,17 +11,20 @@ import {
   AlertIcon,
   AlertDescription,
 } from '@chakra-ui/react';
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Link as LinkRoute, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import reg from './Register.module.scss';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { authRegister } from '../../store/action-creator/auth';
 import { DataFormAuth } from '../../types/auth';
+import { authSlice } from '../../store/reducers/authReducer';
 
 const Register: FC = () => {
   const { logined, error } = useAppSelector((state) => state.authReducer);
+  const [ckeckbox1, setCheckbox] = useState(false);
   const toast = useToast();
+  const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -35,8 +38,11 @@ const Register: FC = () => {
         description: 'You have successfully registered',
       });
     }
+    return () => {
+      dispatch(authSlice.actions.resetError());
+    };
   }, [logined]);
-  const dispatch = useAppDispatch();
+
   const {
     register,
     formState: { errors },
@@ -160,16 +166,20 @@ const Register: FC = () => {
             {errors?.repeatPass && <>{errors?.repeatPass?.message || 'Error'}</>}{' '}
           </Text>
         </label>
-        <Checkbox
-          w="309px"
-          alignItems="baseline"
-          mt="18px"
-          {...register('check', { required: 'The field must be filled in' })}
-        >
-          <Text fontSize={'14px'}>I agree to the processing of my personal information</Text>
-        </Checkbox>
+        <label>
+          <Box display={'flex'}>
+            <Checkbox
+              mr="5px"
+              {...register('check', { value: ckeckbox1, required: 'The field must be filled in' })}
+              onChange={(e) => {
+                setCheckbox(e.target.checked);
+              }}
+            ></Checkbox>
+            <Text fontSize={'14px'}>I agree to the processing of my personal information</Text>
+          </Box>
+        </label>
         <Text fontSize={'14px'} color="red">
-          {errors?.check && <>{errors?.check?.message || 'Error'}</>}{' '}
+          {errors?.check && <>{errors?.check?.message || 'Error'}</>}
         </Text>
         <Button colorScheme="blue" mt="12px" type="submit" w="319px" h="40px" mb="8px">
           Create

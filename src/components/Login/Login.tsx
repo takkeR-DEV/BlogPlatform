@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { Link as LinkRoute, useLocation, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { authLogin } from '../../store/action-creator/auth';
+import { authSlice } from '../../store/reducers/authReducer';
 import { DataFormAuth } from '../../types/auth';
 import login from './Login.module.scss';
 
@@ -35,6 +36,9 @@ const Register: FC = () => {
         description: 'You have successfully logged in',
       });
     }
+    return () => {
+      dispatch(authSlice.actions.resetError());
+    };
   }, [logined]);
 
   useEffect(() => {

@@ -55,8 +55,10 @@ export const authSlice = createSlice({
       state.user = {};
     },
     authSetToken(state, action: PayloadAction<string>) {
-      const f = 15;
       state.token = action.payload;
+    },
+    resetError(state) {
+      state.error = '';
     },
   },
 });
